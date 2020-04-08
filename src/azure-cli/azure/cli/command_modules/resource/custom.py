@@ -2296,6 +2296,34 @@ def show_version(cmd):
     return versions
 
 
+def upgrade_version(cmd):
+    from azure.cli.core._environment import _ENV_AZ_INSTALLER
+    import subprocess
+    try:
+        installer = os.getenv(_ENV_AZ_INSTALLER)
+        if installer == 'DEB':
+            if os.getuid() == 0:
+                subprocess.call('apt-get update && apt-get install --only-upgrade -y azure-cli', shell=True)
+            else:
+                subprocess.call('sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli', shell=True)
+        elif installer == 'RPM':
+            if os.getuid() == 0:
+                subprocess.call('yum update -y azure-cli', shell=True)
+            else:
+                subprocess.call('sudo yum update -y azure-cli', shell=True)
+        elif installer == 'HOMEBREW':
+            subprocess.call('brew update && brew upgrade -y azure-cli', shell=True)
+        elif installer == 'PIP':
+            subprocess.call('pip install --upgrade azure-cli', shell=True)
+        elif installer == 'DOCKER':
+            logger.warning('Exit the container to pull latest image with docker pull mcr.microsoft.com/azure-cli or pip install --upgrade azure-cli in this container')
+        elif installer == 'MSI':
+            logger.warning('Update with the latest MSI https://aka.ms/installazurecliwindows')
+        else:
+            logger.warning('Not able to upgrade automatically. Instructions can be found at https://docs.microsoft.com/en-us/cli/azure/install-azure-cli')
+    except Exception: # pylint: disable=broad-except
+        pass
+
 class _ResourceUtils(object):  # pylint: disable=too-many-instance-attributes
     def __init__(self, cli_ctx,
                  resource_group_name=None, resource_provider_namespace=None,
