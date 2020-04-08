@@ -2302,14 +2302,8 @@ def upgrade_version(cmd):
     try:
         installer = os.getenv(_ENV_AZ_INSTALLER)
         if installer == 'DEB':
-            # if os.getuid() == 0:
-                # subprocess.call('apt-get update && apt-get install --only-upgrade -y azure-cli', shell=True)
-            # else:
             subprocess.call('sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli', shell=True)
         elif installer == 'RPM':
-            # if os.getuid() == 0:
-                # subprocess.call('yum update -y azure-cli', shell=True)
-            # else:
             subprocess.call('sudo yum update -y azure-cli', shell=True)
         elif installer == 'HOMEBREW':
             subprocess.call('brew update && brew upgrade -y azure-cli', shell=True)
