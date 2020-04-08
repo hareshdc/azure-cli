@@ -826,15 +826,15 @@ def user_confirmation(message, yes=False):
         raise CLIError(
             'Unable to prompt for confirmation as no tty available. Use --yes.')
 
+
 def get_linux_distro():
-    import platform
     if platform.system() != 'Linux':
         return None, None
 
     try:
         with open('/etc/os-release') as lines:
             tokens = [line.strip() for line in lines]
-    except Exception as e:
+    except Exception:  # pylint: disable=broad-except
         return None, None
 
     release_info = {}

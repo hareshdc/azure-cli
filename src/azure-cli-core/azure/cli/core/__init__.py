@@ -112,7 +112,7 @@ class AzCli(CLI):
             elif installer == 'MSI':
                 warning_msg += " with the latest MSI https://aka.ms/installazurecliwindows"
             else:
-                warning_msg += '. Instructions can be found at https://docs.microsoft.com/en-us/cli/azure/install-azure-cli' # pylint: disable=line-too-long
+                warning_msg += '. Instructions can be found at https://docs.microsoft.com/en-us/cli/azure/install-azure-cli'  # pylint: disable=line-too-long
             logger.warning(warning_msg, updates_available)
         else:
             print('Your CLI is up-to-date.')
