@@ -3,10 +3,6 @@
 Release History
 ===============
 
-2.3.1
-++++++
-* No changes
-
 2.3.0
 ++++++
 * az cloud show: add application insights endpoint for public cloud
